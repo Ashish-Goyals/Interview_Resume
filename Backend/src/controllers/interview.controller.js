@@ -4,7 +4,10 @@ const interviewReportModel = require ('../models/interviewReport.model');
 async function generateInterViewReportController (req, res) {
   // const resumeFile = req.file;
 
-  const resumeContent = await pdfParse (req.file.buffer);
+  const resumeContent = await new pdfParse.PDFParse (
+    Uint8Array.from (req.file.buffer)
+  ).getText ();
+
   const {selfDescription, jobDescription} = req.body;
 
   const interViewReportByAi = await generateInterviewReport ({
@@ -13,15 +16,15 @@ async function generateInterViewReportController (req, res) {
     jobDescription,
   });
   const interviewReport = await interviewReportModel.create ({
-    userId: req.user.id,
+    user: req.user.id,
     resume: resumeContent.text,
     selfDescription,
     jobDescription,
     ...interViewReportByAi,
   });
   // interviewReport.save ();
-  console.log ('inter', interviewReport);
-  console.log ('Report by ai', interViewReportByAi);
+  // console.log ('inter', interviewReport);
+  // console.log ('Report by ai', interViewReportByAi);
   res.status (200).json ({
     message: 'Interview report generated successfully',
     success: true,

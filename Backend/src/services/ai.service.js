@@ -17,7 +17,7 @@ const interviewReportSchema = z.object ({
   matchScore: z
     .number ()
     .describe (
-      "A score between 0 and 100 indicating how well the candidate's profile matches the job describe"
+      "A score between 0 and 100 indicating how well the candidate's profile matches the job description"
     ),
   technicalQuestions: z
     .array (
@@ -45,7 +45,7 @@ const interviewReportSchema = z.object ({
       z.object ({
         question: z
           .string ()
-          .describe ('The technical question can be asked in the interview'),
+          .describe ('The behavioral question can be asked in the interview'),
         intention: z
           .string ()
           .describe (
@@ -104,21 +104,64 @@ async function generateInterviewReport({
   selfDescription,
   jobDescription,
 }) {
-  const prompt = `Generate an interview report for a candidate with the following details:
-    Resume: ${resume}
-    Self description: ${selfDescription}
-    Job description: ${jobDescription}`;
+  const prompt = `Generate a comprehensive interview report for a candidate based on the following details. Ensure the output is strictly in the specified JSON structure with all fields populated.
+
+Candidate Resume: ${resume}
+Candidate Self-Description: ${selfDescription}
+Job Description: ${jobDescription}
+
+Output JSON structure:
+{
+  "matchScore": number (0-100),
+  "technicalQuestions": [
+    {
+      "question": "string",
+      "intention": "string",
+      "answer": "string"
+    }
+  ],
+  "behavioralQuestions": [
+    {
+      "question": "string",
+      "intention": "string",
+      "answer": "string"
+    }
+  ],
+  "skillGaps": [
+    {
+      "skill": "string",
+      "severity": "low" | "medium" | "high"
+    }
+  ],
+  "preparationPlan": [
+    {
+      "day": number,
+      "focus": "string",
+      "tasks": ["string"]
+    }
+  ]
+}
+
+Provide at least 3-5 items in each array. Do not add extra fields.
+
+IMPORTANT: Return ONLY the JSON object. Do NOT wrap it in markdown code blocks, backticks, or any other formatting. Output raw JSON only.`;
 
   const response = await ai.models.generateContent ({
-    model: 'gemini-3-flash-preview',
+    model: 'gemini-2.5-flash',
     contents: prompt,
-    config: {
-      responseMimeType: 'application/json',
-      responseSchema: zodToJsonSchema (interviewReportSchema),
-    },
   });
-  console.log (response.text);
-  return JSON.parse (response.text);
+  let textResponse = response.text;
+  // console.log (textResponse);
+
+  // Strip markdown code blocks if present
+  if (textResponse.includes ('```')) {
+    textResponse = textResponse
+      .replace (/```json\n?/g, '')
+      .replace (/```\n?/g, '')
+      .trim ();
+  }
+
+  return JSON.parse (textResponse);
 }
 
 module.exports = {generateInterviewReport};
