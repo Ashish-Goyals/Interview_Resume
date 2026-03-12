@@ -46,9 +46,12 @@ export const useAuth = () => {
         try {
           setLoading (true);
           const data = await getMe ();
-          setUser (data.user);
+          if (data && data.user) {
+            setUser (data.user);
+          }
         } catch (error) {
-          console.log (error);
+          console.log ('User not authenticated:', error.message);
+          setUser (null);
         } finally {
           setLoading (false);
         }
