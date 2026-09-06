@@ -1,14 +1,14 @@
-const mongoose = require ('mongoose');
+const mongoose = require("mongoose");
 
-const technicalQuestionSchema = new mongoose.Schema (
+const technicalQuestionSchema = new mongoose.Schema(
   {
     question: {
       type: String,
-      required: [true, 'Technical question is required'],
+      required: [true, "Technical question is required"],
     },
     intention: {
       type: String,
-      required: [true, 'Intention is required'],
+      required: [true, "Intention is required"],
     },
     answer: {
       type: String,
@@ -16,18 +16,18 @@ const technicalQuestionSchema = new mongoose.Schema (
   },
   {
     _id: false,
-  }
+  },
 );
 
-const behavioralQuestionSchema = new mongoose.Schema (
+const behavioralQuestionSchema = new mongoose.Schema(
   {
     question: {
       type: String,
-      required: [true, 'Behavioral question is required'],
+      required: [true, "Behavioral question is required"],
     },
     intention: {
       type: String,
-      required: [true, 'Intention is required'],
+      required: [true, "Intention is required"],
     },
     answer: {
       type: String,
@@ -35,53 +35,72 @@ const behavioralQuestionSchema = new mongoose.Schema (
   },
   {
     _id: false,
-  }
+  },
 );
 
-const skillGapSchema = new mongoose.Schema (
+const skillGapSchema = new mongoose.Schema(
   {
     skill: {
       type: String,
-      required: [true, 'Skill is required'],
+      required: [true, "Skill is required"],
     },
     severity: {
       type: String,
-      enum: ['low', 'medium', 'high'],
-      required: [true, 'Severity is required'],
+      enum: ["low", "medium", "high"],
+      required: [true, "Severity is required"],
     },
   },
   {
     _id: false,
-  }
+  },
 );
 
-const preparationPlanSchema = new mongoose.Schema (
+const preparationPlanSchema = new mongoose.Schema(
   {
     day: {
       type: Number,
-      required: [true, 'Day is required'],
+      required: [true, "Day is required"],
     },
     focus: {
       type: String,
-      required: [true, 'Focus is required'],
+      required: [true, "Focus is required"],
     },
     task: [
       {
         type: String,
-        required: [true, 'Task is required'],
+        required: [true, "Task is required"],
       },
     ],
   },
   {
     _id: false,
-  }
+  },
 );
 
-const interviewReportSchema = new mongoose.Schema (
+const ragSourceSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: [true, "Source title is required"],
+    },
+    type: {
+      type: String,
+      enum: ["qa", "prep_doc"],
+    },
+    topic: {
+      type: String,
+    },
+  },
+  {
+    _id: false,
+  },
+);
+
+const interviewReportSchema = new mongoose.Schema(
   {
     jobDescription: {
       type: String,
-      required: [true, 'Job description is required'],
+      required: [true, "Job description is required"],
     },
     resume: {
       type: String,
@@ -101,19 +120,20 @@ const interviewReportSchema = new mongoose.Schema (
     behavioralQuestions: [behavioralQuestionSchema],
     skillGaps: [skillGapSchema],
     preparationPlan: [preparationPlanSchema],
+    ragSources: [ragSourceSchema],
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'users',
+      ref: "users",
     },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-const interviewReportModel = mongoose.model (
-  'InterviewReport',
-  interviewReportSchema
+const interviewReportModel = mongoose.model(
+  "InterviewReport",
+  interviewReportSchema,
 );
 
 module.exports = interviewReportModel;

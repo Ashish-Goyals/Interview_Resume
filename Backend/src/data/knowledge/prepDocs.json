@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Cracking the MERN Stack Developer Interview",
+    "role": "MERN Stack Developer",
+    "topic": "General Strategy",
+    "content": "MERN interviews typically move through four stages: a resume/portfolio screen, a live coding round, a system design or architecture discussion, and a behavioral round.\n\nFor the coding round, expect JavaScript fundamentals (closures, prototypal inheritance, async/await vs Promises) and at least one DOM or React-specific exercise, such as building a small component with state and effects under time pressure.\n\nFor the architecture discussion, interviewers care less about a 'correct' answer and more about your reasoning: how you'd structure a Node/Express project, where you'd put validation, how you'd handle authentication and authorization, and how you'd design the MongoDB schema for the given domain (embedding vs referencing, indexing strategy).\n\nFor the behavioral round, prepare 3-4 STAR stories covering: a bug you struggled with, a disagreement you navigated, a time you had to learn something quickly, and a project you're proud of. Reuse and adapt these stories rather than improvising fresh ones each time."
+  },
+  {
+    "title": "React Interview Prep Guide",
+    "role": "MERN Stack Developer",
+    "topic": "React",
+    "content": "Be ready to explain the React rendering lifecycle: how state and prop changes trigger re-renders, how the virtual DOM diffing works at a high level, and why keys matter in lists (React uses them to match elements between renders and avoid unnecessary remounts).\n\nHooks are a near-guaranteed topic. Know the rules of hooks (only call at the top level, only call from React functions), the difference between useState and useReducer (useReducer is preferable when the next state depends on complex logic or multiple sub-values), and how useMemo/useCallback prevent unnecessary recalculation or re-renders — but also be ready to explain when overusing them adds complexity without real benefit.\n\nExpect a small live-coding exercise: building a searchable/filterable list, a debounced input, or a simple form with validation. Practice writing these without relying on a boilerplate generator so you're comfortable with plain useState/useEffect patterns."
+  },
+  {
+    "title": "Node.js and Express Deep Dive",
+    "role": "MERN Stack Developer",
+    "topic": "Node.js",
+    "content": "Interviewers frequently probe whether you understand that Node is single-threaded for JavaScript execution but non-blocking for I/O. Be ready to explain the event loop phases (timers, pending callbacks, poll, check, close callbacks) at a conceptual level, and how CPU-heavy synchronous code (like a large JSON.parse or a tight loop) can block the entire server.\n\nOn the Express side, know how to structure middleware for cross-cutting concerns (logging, auth, error handling), how route-level versus app-level middleware differs, and how to avoid common pitfalls like forgetting to call next() or sending a response twice.\n\nFor error handling specifically: wrap async route handlers so unhandled promise rejections don't crash the process, funnel errors into a single error-handling middleware, and return consistent error response shapes across the API."
+  },
+  {
+    "title": "MongoDB Schema Design for Interviews",
+    "role": "MERN Stack Developer",
+    "topic": "MongoDB",
+    "content": "A classic interview question is 'design the schema for X' (a blog, an e-commerce store, a chat app). Walk through the access patterns first — what queries will be run most often — before deciding on your schema, since MongoDB schema design is driven by query patterns rather than normalization rules.\n\nBe ready to justify embedding versus referencing: embed data that's read together and bounded in size (e.g. a user's shipping address inside their profile), reference data that's large, frequently updated independently, or shared across many parent documents (e.g. products referenced from many orders).\n\nAlso mention indexing: compound indexes for common filter+sort combinations, and being explicit about the tradeoff between faster reads and slower writes/more storage that indexes introduce."
+  },
+  {
+    "title": "Authentication and Security Fundamentals",
+    "role": "MERN Stack Developer",
+    "topic": "Security",
+    "content": "For any role touching authentication, be ready to explain the full JWT flow: issuing a signed token on login, verifying it on protected routes via middleware, and handling logout/invalidation (since JWTs are stateless, logout typically requires a blocklist or short expiry plus refresh tokens).\n\nKnow the difference between authentication (who you are) and authorization (what you're allowed to do), and how role-based access control is typically implemented as middleware that checks a decoded token's claims.\n\nCommon security topics to review: password hashing with bcrypt and why plain salting isn't enough, protecting against NoSQL injection by validating/sanitizing input, setting secure cookie flags (httpOnly, secure, sameSite), and rate-limiting authentication endpoints to slow down brute-force attempts."
+  },
+  {
+    "title": "System Design Basics for Junior/Mid-Level Roles",
+    "role": "MERN Stack Developer",
+    "topic": "System Design",
+    "content": "At junior-to-mid level, system design questions are usually scoped small: 'design a URL shortener' or 'design a notification system' rather than something at Twitter-scale. Structure your answer as: clarify requirements and scale, define the core API/data model, sketch the main components, then discuss one or two scaling considerations (caching, indexing, background jobs).\n\nBe explicit about tradeoffs rather than presenting one 'right' design — for example, choosing eventual consistency for a notification feed to keep writes fast, versus strong consistency for a payment record.\n\nFamiliarize yourself with basic building blocks: load balancers, caching layers (Redis), message queues for decoupling slow work from the request/response cycle, and CDNs for static content — you don't need deep expertise, just enough to reason about where each one fits."
+  }
+]

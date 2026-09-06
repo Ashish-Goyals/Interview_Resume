@@ -1,0 +1,74 @@
+[
+  {
+    "role": "MERN Stack Developer",
+    "topic": "React",
+    "question": "What is the difference between controlled and uncontrolled components in React?",
+    "answer": "A controlled component's value is driven by React state via props like value/onChange, making React the single source of truth. An uncontrolled component keeps its own internal DOM state and is read via a ref. Controlled components are preferred for validation and dynamic UI, while uncontrolled ones are simpler for basic forms."
+  },
+  {
+    "role": "MERN Stack Developer",
+    "topic": "React",
+    "question": "How does the useEffect dependency array affect re-renders?",
+    "answer": "The dependency array tells React when to re-run the effect. An empty array runs the effect once after mount, omitting it runs the effect after every render, and listing specific values runs the effect only when those values change. Getting this wrong is a common source of bugs (stale closures or infinite loops)."
+  },
+  {
+    "role": "MERN Stack Developer",
+    "topic": "Node.js",
+    "question": "Explain the Node.js event loop and how it enables non-blocking I/O.",
+    "answer": "Node.js runs JavaScript on a single thread but delegates I/O operations (file system, network, timers) to the libuv thread pool or OS. The event loop continuously checks for completed operations and pushes their callbacks onto the call stack, allowing Node to handle many concurrent connections without blocking on slow operations."
+  },
+  {
+    "role": "MERN Stack Developer",
+    "topic": "Node.js",
+    "question": "What's the difference between process.nextTick, setImmediate, and setTimeout(fn, 0)?",
+    "answer": "process.nextTick callbacks run before the event loop continues to the next phase, effectively jumping the queue. setImmediate runs in the check phase, after I/O callbacks. setTimeout(fn, 0) is scheduled in the timers phase and its exact ordering relative to setImmediate can vary depending on context (main module vs I/O callback)."
+  },
+  {
+    "role": "MERN Stack Developer",
+    "topic": "Express.js",
+    "question": "How does Express middleware chaining work, and how would you build error-handling middleware?",
+    "answer": "Middleware functions execute in the order they're registered, each receiving (req, res, next). Calling next() passes control to the next middleware; calling next(err) skips to error-handling middleware, which is defined with four parameters (err, req, res, next). Centralizing error handling this way avoids repeating try/catch in every route."
+  },
+  {
+    "role": "MERN Stack Developer",
+    "topic": "MongoDB",
+    "question": "When would you denormalize data in MongoDB versus using references?",
+    "answer": "Denormalize (embed) when data is read together frequently and doesn't change often, since it avoids extra queries/joins. Use references when the embedded data would grow unbounded (e.g. comments on a viral post), when it's shared across many parents, or when it changes independently and duplicating it risks inconsistency."
+  },
+  {
+    "role": "MERN Stack Developer",
+    "topic": "Authentication",
+    "question": "Why store JWTs in httpOnly cookies instead of localStorage?",
+    "answer": "httpOnly cookies aren't accessible to JavaScript, which mitigates XSS-based token theft. localStorage is fully readable by any script running on the page, so an XSS vulnerability anywhere in the app could leak the token. Cookies do need CSRF protections (SameSite attribute, CSRF tokens) since they're sent automatically with requests."
+  },
+  {
+    "role": "MERN Stack Developer",
+    "topic": "System Design",
+    "question": "How would you scale a Node.js/Express API to handle 10x traffic?",
+    "answer": "Start with horizontal scaling behind a load balancer using the Node cluster module or multiple containers, add caching (Redis) for hot reads, move heavy/blocking work (PDF generation, image processing) to background job queues, add a CDN for static assets, and profile the database for missing indexes before assuming you need more app servers."
+  },
+  {
+    "role": "MERN Stack Developer",
+    "topic": "Behavioral",
+    "question": "Tell me about a time you had to debug a production issue under pressure.",
+    "answer": "Use the STAR structure: describe the Situation and impact, the Task you owned, the Actions you took (how you isolated the root cause, what tools/logs you used, how you communicated status), and the measurable Result. Interviewers are listening for a calm, methodical process, not just a happy ending."
+  },
+  {
+    "role": "MERN Stack Developer",
+    "topic": "Behavioral",
+    "question": "Describe a disagreement you had with a teammate about a technical decision.",
+    "answer": "Focus on how you sought to understand their reasoning first, brought concrete evidence (benchmarks, prior incidents, tradeoffs) rather than opinion, and how the decision was ultimately made and revisited later. Avoid framing it as 'I was right' — emphasize collaboration and the criteria used to decide."
+  },
+  {
+    "role": "Junior MERN Stack Developer",
+    "topic": "REST APIs",
+    "question": "What makes an API RESTful, and what are common REST anti-patterns?",
+    "answer": "RESTful APIs use resource-based URLs, standard HTTP methods (GET/POST/PUT/PATCH/DELETE) with correct status codes, and are stateless between requests. Common anti-patterns include verbs in URLs (/getUser), using GET for state-changing actions, returning 200 for errors, and ignoring HTTP caching semantics."
+  },
+  {
+    "role": "Junior MERN Stack Developer",
+    "topic": "Git",
+    "question": "Walk through how you'd resolve a merge conflict in a feature branch.",
+    "answer": "Pull the latest target branch, merge or rebase it into your feature branch, open the conflicting files, manually reconcile the conflicting sections (understanding both changes' intent, not just picking one blindly), run the test suite, then commit and push. Rebasing keeps history linear but rewrites commits, so it's best avoided on shared branches."
+  }
+]
